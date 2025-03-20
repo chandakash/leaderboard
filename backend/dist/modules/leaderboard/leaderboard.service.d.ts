@@ -1,0 +1,31 @@
+import { DataSource, Repository } from 'typeorm';
+import { User } from '../../entities/user.entity';
+import { GameSession } from '../../entities/game-session.entity';
+import { Leaderboard } from '../../entities/leaderboard.entity';
+import { SubmitScoreDto } from './dto/submit-score.dto';
+import { LeaderboardEntryDto } from './dto/leaderboard-entry.dto';
+import { Cache } from 'cache-manager';
+export declare class LeaderboardService {
+    private userRepository;
+    private gameSessionRepository;
+    private leaderboardRepository;
+    private dataSource;
+    private cacheManager;
+    private readonly logger;
+    private topUserIds;
+    private lowestTopScore;
+    private lastCacheRefresh;
+    private readonly TOP_USERS_REFRESH_LOCK;
+    private isRefreshing;
+    private cacheRefreshPromise;
+    constructor(userRepository: Repository<User>, gameSessionRepository: Repository<GameSession>, leaderboardRepository: Repository<Leaderboard>, dataSource: DataSource, cacheManager: Cache);
+    submitScore(submitScoreDto: SubmitScoreDto): Promise<Leaderboard>;
+    getTopPlayers(limit?: number): Promise<LeaderboardEntryDto[]>;
+    getPlayerRank(userId: number): Promise<LeaderboardEntryDto>;
+    getUserGameSessions(userId: number, limit?: number): Promise<GameSession[]>;
+    private refreshTopUsersCache;
+    private updateTopLeaderboardRanks;
+    private updateSingleUserRank;
+    private invalidateTopLeaderboardCache;
+    private ensureTopUsersCacheIsRefreshed;
+}
