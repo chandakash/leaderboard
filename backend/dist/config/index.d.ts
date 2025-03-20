@@ -19,5 +19,8 @@ declare const _default: () => {
         NEW_RELIC_APP_NAME: string;
         NEW_RELIC_LICENSE_KEY: string;
     };
+    apiSecret: {
+        key: string;
+    };
 };
 export default _default;

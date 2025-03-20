@@ -2,6 +2,7 @@ import { LeaderboardService } from './leaderboard.service';
 import { SubmitScoreDto } from './dto/submit-score.dto';
 export declare class LeaderboardController {
     private readonly leaderboardService;
+    private readonly logger;
     constructor(leaderboardService: LeaderboardService);
     submitScore(submitScoreDto: SubmitScoreDto): Promise<any>;
     getTopPlayers(limit?: number): Promise<any>;

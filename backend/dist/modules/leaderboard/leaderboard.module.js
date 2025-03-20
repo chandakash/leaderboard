@@ -14,6 +14,7 @@ const leaderboard_service_1 = require("./leaderboard.service");
 const user_entity_1 = require("../../entities/user.entity");
 const game_session_entity_1 = require("../../entities/game-session.entity");
 const leaderboard_entity_1 = require("../../entities/leaderboard.entity");
+const redis_module_1 = require("../redis/redis.module");
 let LeaderboardModule = class LeaderboardModule {
 };
 exports.LeaderboardModule = LeaderboardModule;
@@ -21,6 +22,7 @@ exports.LeaderboardModule = LeaderboardModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, game_session_entity_1.GameSession, leaderboard_entity_1.Leaderboard]),
+            redis_module_1.RedisModule,
         ],
         controllers: [leaderboard_controller_1.LeaderboardController],
         providers: [

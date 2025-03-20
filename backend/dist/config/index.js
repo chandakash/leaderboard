@@ -21,5 +21,8 @@ exports.default = () => ({
         NEW_RELIC_APP_NAME: process.env.NEW_RELIC_APP_NAME || 'leaderboard',
         NEW_RELIC_LICENSE_KEY: process.env.NEW_RELIC_LICENSE_KEY || '1234567890',
     },
+    apiSecret: {
+        key: process.env.API_SECRET_KEY || ''
+    }
 });
 //# sourceMappingURL=index.js.map

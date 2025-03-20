@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class SubmitScoreDto {
   @ApiProperty({
@@ -17,6 +17,7 @@ export class SubmitScoreDto {
   @IsNotEmpty()
   @IsNumber()
   @Min(0, { message: 'Score cannot be negative' })
+  @Max(1000)
   score: number;
 
   @ApiProperty({
@@ -24,6 +25,6 @@ export class SubmitScoreDto {
     example: 'solo',
     required: false
   })
-  @IsString()
+  @IsEnum(["solo", "team"])
   game_mode: string = 'solo';
 } 

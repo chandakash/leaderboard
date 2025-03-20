@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
+const throttler_1 = require("@nestjs/throttler");
 const cache_manager_1 = require("@nestjs/cache-manager");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
@@ -18,6 +19,7 @@ const database_config_1 = require("./config/database.config");
 const redisStore = require("cache-manager-redis-store");
 const leaderboard_module_1 = require("./modules/leaderboard/leaderboard.module");
 const user_module_1 = require("./modules/user/user.module");
+const redis_module_1 = require("./modules/redis/redis.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -33,6 +35,16 @@ exports.AppModule = AppModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: (configService) => (0, database_config_1.getDatabaseConfig)(configService),
             }),
+            throttler_1.ThrottlerModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    throttlers: [{
+                            ttl: configService.get('rateLimit.ttl', 60),
+                            limit: configService.get('rateLimit.max', 100),
+                        }],
+                }),
+            }),
             cache_manager_1.CacheModule.registerAsync({
                 isGlobal: true,
                 imports: [config_1.ConfigModule],
@@ -44,6 +56,7 @@ exports.AppModule = AppModule = __decorate([
                     ttl: 300,
                 }),
             }),
+            redis_module_1.RedisModule,
             leaderboard_module_1.LeaderboardModule,
             user_module_1.UserModule,
         ],

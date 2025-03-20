@@ -51,8 +51,8 @@ export const options = {
       executor: 'ramping-vus',
       startVUs: 5,
       stages: [
-        { duration: '5s', target: 50 },  // Ramp up faster
-        { duration: '5s', target: 50 },   // Stay at peak 
+        { duration: '5s', target: 10 },  // Ramp up faster
+        { duration: '5s', target: 10 },   // Stay at peak 
         { duration: '5s', target: 0 },   // Ramp down
       ],
       exec: 'submitScores',
@@ -128,7 +128,7 @@ export function submitScores() {
     : randomIntBetween(1, 5); 
   
   const score = randomIntBetween(10, 1000);
-  const gameModes = ['standard', 'time-attack', 'survival', 'multiplayer'];
+  const gameModes = ['solo', 'team'];
   const gameMode = gameModes[randomIntBetween(0, gameModes.length - 1)];
   
   const startTime = new Date();

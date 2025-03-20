@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var LeaderboardController_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LeaderboardController = void 0;
 const common_1 = require("@nestjs/common");
@@ -18,8 +19,9 @@ const swagger_1 = require("@nestjs/swagger");
 const leaderboard_service_1 = require("./leaderboard.service");
 const submit_score_dto_1 = require("./dto/submit-score.dto");
 const leaderboard_entry_dto_1 = require("./dto/leaderboard-entry.dto");
-let LeaderboardController = class LeaderboardController {
+let LeaderboardController = LeaderboardController_1 = class LeaderboardController {
     leaderboardService;
+    logger = new common_1.Logger(LeaderboardController_1.name);
     constructor(leaderboardService) {
         this.leaderboardService = leaderboardService;
     }
@@ -58,6 +60,7 @@ __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Submit a new score' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Score submitted successfully' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid input data' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized' }),
     (0, swagger_1.ApiResponse)({ status: 404, description: 'User not found' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -85,7 +88,7 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], LeaderboardController.prototype, "getPlayerRank", null);
-exports.LeaderboardController = LeaderboardController = __decorate([
+exports.LeaderboardController = LeaderboardController = LeaderboardController_1 = __decorate([
     (0, swagger_1.ApiTags)('Leaderboard'),
     (0, common_1.Controller)('api/leaderboard'),
     __metadata("design:paramtypes", [leaderboard_service_1.LeaderboardService])

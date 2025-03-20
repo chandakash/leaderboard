@@ -35,6 +35,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(0, { message: 'Score cannot be negative' }),
+    (0, class_validator_1.Max)(1000),
     __metadata("design:type", Number)
 ], SubmitScoreDto.prototype, "score", void 0);
 __decorate([
@@ -43,7 +44,7 @@ __decorate([
         example: 'solo',
         required: false
     }),
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsEnum)(["solo", "team"]),
     __metadata("design:type", String)
 ], SubmitScoreDto.prototype, "game_mode", void 0);
 //# sourceMappingURL=submit-score.dto.js.map

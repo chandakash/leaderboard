@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -12,6 +12,8 @@ import { getDatabaseConfig } from './config/database.config';
 import * as redisStore from 'cache-manager-redis-store';
 import { LeaderboardModule } from './modules/leaderboard/leaderboard.module';
 import { UserModule } from './modules/user/user.module';
+import { RedisModule } from './modules/redis/redis.module';
+import { ApiTokenGuard } from './utils/auth.guard';
 
 @Module({
   imports: [
@@ -25,16 +27,16 @@ import { UserModule } from './modules/user/user.module';
       useFactory: (configService: ConfigService) => getDatabaseConfig(configService),
     }),
   
-    // ThrottlerModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) => ({
-    //     throttlers: [{
-    //       ttl: configService.get('rateLimit.ttl', 60),
-    //       limit: configService.get('rateLimit.max', 100),
-    //     }],
-    //   }),
-    // }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        throttlers: [{
+          ttl: configService.get('rateLimit.ttl', 60),
+          limit: configService.get('rateLimit.max', 100),
+        }],
+      }),
+    }),
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],
@@ -47,6 +49,7 @@ import { UserModule } from './modules/user/user.module';
       }),
     }),
     
+    RedisModule,
     LeaderboardModule,
     UserModule,
   ],
@@ -57,6 +60,10 @@ import { UserModule } from './modules/user/user.module';
     //   provide: APP_GUARD,
     //   useClass: ThrottlerGuard,
     // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: ApiTokenGuard,
+    // }
   ],
 })
 export class AppModule {}

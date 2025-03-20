@@ -22,8 +22,8 @@ def get_user_rank(user_id):
 if __name__ == "__main__":
     while True:
     # for i in range(10000000):
-        user_id = random.randint(11, 20)
+        user_id = random.randint(1, 4)
         submit_score(user_id)
-        print(get_top_players())
-        print(get_user_rank(user_id))
-        time.sleep(random.uniform(0.5, 2))  # Simulate real user interaction
+        # print(get_top_players())
+        # print(get_user_rank(user_id))
+        # time.sleep(random.uniform(0.5, 2))  # Simulate real user interaction
